@@ -52,14 +52,12 @@
                 <version>1.11</version>
                 <configuration>
                     <complianceLevel>1.8</complianceLevel>
-                    <includes>
-                        <include>**/*.java</include>
-                        <include>**/*.aj</include>
-                    </includes>
-                    <aspectDirectory>src/main</aspectDirectory>
-                    <testAspectDirectory>src/test</testAspectDirectory>
-                    <XaddSerialVersionUID>true</XaddSerialVersionUID>
                     <showWeaveInfo>true</showWeaveInfo>
+                    <forceAjcCompile>true</forceAjcCompile>
+                    <sources/>
+                    <weaveDirectories>
+                        <weaveDirectory>${project.build.directory}/classes</weaveDirectory>
+                    </weaveDirectories>
                     <aspectLibraries>
                         <aspectLibrary>
                             <groupId>blatter.basics</groupId>
@@ -69,15 +67,9 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>compile_with_aspectj</id>
+                        <phase>process-classes</phase>
                         <goals>
                             <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>test-compile_with_aspectj</id>
-                        <goals>
-                            <goal>test-compile</goal>
                         </goals>
                     </execution>
                 </executions>

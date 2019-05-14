@@ -5,7 +5,7 @@ import org.junit.Assert;
 
 
 public class POJOWithLombokTest {
-    /*@Test
+    @Test
     public void getFirstName() {
         POJOWithLombok pojoWithLombok = new POJOWithLombok("firstName", "lastName");
         Assert.assertEquals("firstName", pojoWithLombok.getFirstName());
@@ -31,6 +31,6 @@ public class POJOWithLombokTest {
         pojoWithLombok.setLastName("anotherLastName");
 
         Assert.assertEquals("anotherLastName", pojoWithLombok.getLastName());
-    }*/
+    }
 }
 
