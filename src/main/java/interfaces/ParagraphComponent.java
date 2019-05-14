@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 
 public class ParagraphComponent implements ComponentInterface {
-    private ArrayList<ComponentInterface> children = new ArrayList<>();
+    private ArrayList<ComponentInterface> children = new ArrayList<ComponentInterface>();
     private String content;
 
     public ParagraphComponent(String content) {

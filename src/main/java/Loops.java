@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 
 public class Loops {
-    ArrayList<Integer> integers = new ArrayList<>();
+    ArrayList<Integer> integers = new ArrayList<Integer>();
 
     public Loops() {
         // [1, 2, 3] array
