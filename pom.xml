@@ -4,12 +4,12 @@
        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>blatter</groupId>
-    <artifactId>Basics</artifactId>
+    <artifactId>basics</artifactId>
     <version>1.0</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.source-target.version>1.8</java.source-target.version>
-        <aspectj.version>1.8.4</aspectj.version>
+        <aspectj.version>1.9.4</aspectj.version>
     </properties>
     <dependencies>
         <dependency>
@@ -21,12 +21,12 @@
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
-            <version>1.9.4</version>
+            <version>${aspectj.version}</version>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-            <version>1.9.4</version>
+            <version>${aspectj.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -35,80 +35,59 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>blatter.basics</groupId>
+                <artifactId>validation-aspect</artifactId>
+                <version>1.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>aspectj-maven-plugin</artifactId>
-                    <version>1.7</version>
-                    <configuration>
-                        <showWeaveInfo>true</showWeaveInfo>
-                        <source>${java.source-target.version}</source>
-                        <target>${java.source-target.version}</target>
-                        <Xlint>ignore</Xlint>
-                        <complianceLevel>${java.source-target.version}</complianceLevel>
-                        <encoding>UTF-8</encoding>
-                        <verbose>true</verbose>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <!-- IMPORTANT -->
-                            <phase>process-sources</phase>
-                            <goals>
-                                <goal>compile</goal>
-                                <goal>test-compile</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.aspectj</groupId>
-                            <artifactId>aspectjtools</artifactId>
-                            <version>${aspectj.version}</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>aspectj-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5</version>
+                <version>1.11</version>
+                <configuration>
+                    <complianceLevel>1.8</complianceLevel>
+                    <includes>
+                        <include>**/*.java</include>
+                        <include>**/*.aj</include>
+                    </includes>
+                    <aspectDirectory>src/main</aspectDirectory>
+                    <testAspectDirectory>src/test</testAspectDirectory>
+                    <XaddSerialVersionUID>true</XaddSerialVersionUID>
+                    <showWeaveInfo>true</showWeaveInfo>
+                    <aspectLibraries>
+                        <aspectLibrary>
+                            <groupId>blatter.basics</groupId>
+                            <artifactId>validation-aspect</artifactId>
+                        </aspectLibrary>
+                    </aspectLibraries>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>process-annotations</id>
-                        <phase>generate-sources</phase>
+                        <id>compile_with_aspectj</id>
                         <goals>
                             <goal>compile</goal>
                         </goals>
-                        <configuration>
-                            <compilerArgs>
-                                <arg>-proc:only</arg>
-                                <arg>-processor</arg>
-                                <arg>MyAnnotationProcessor</arg>
-                            </compilerArgs>
-                        </configuration>
                     </execution>
                     <execution>
-                        <id>default-compile
-                        </id> <!-- using an id of default-compile will override the default execution -->
-                        <phase>compile</phase>
+                        <id>test-compile_with_aspectj</id>
                         <goals>
-                            <goal>compile</goal>
+                            <goal>test-compile</goal>
                         </goals>
-                        <configuration>
-                            <compilerArgs>
-                                <arg>-proc:none</arg>
-                            </compilerArgs>
-                        </configuration>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjtools</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
