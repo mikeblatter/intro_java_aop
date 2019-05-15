@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
+// Doesn't work, disabled lombok and enabled aspectj
+
 public class POJOWithLombok {
     @Getter @Setter private String firstName;
     @Getter @Setter private String lastName;
